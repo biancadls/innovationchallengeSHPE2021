@@ -6,7 +6,12 @@ import cv2
 cap = cv2.VideoCapture(0)
 
 # Create the haar cascade
-faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+# faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+# faceCascade = cv2.CascadeClassifier("lbpcascade_frontalface.xml")
+# faceCascade = cv2.CascadeClassifier("lbpcascade_profileface.xml")
+faceCascade = cv2.CascadeClassifier("lbpcascade_frontalface_improved.xml")
+# faceCascade = cv2.CascadeClassifier("haarcascade_eye.xml")
+
 
 x_coord = 0
 y_coord = 0
@@ -22,7 +27,7 @@ while(True):
     faces = faceCascade.detectMultiScale(
         gray,
         scaleFactor=1.1,
-        minNeighbors=5,
+        minNeighbors=3,
         minSize=(30, 30)
         #flags = cv2.CV_HAAR_SCALE_IMAGE
     )
@@ -34,7 +39,7 @@ while(True):
     # Draw a rectangle around the face
     cnt = 0
     for (x, y, w, h) in faces:
-        if(cnt == 0):
+        if(True):
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
             x_coord = x + w / 2
             y_coord = y + h / 2
