@@ -3,6 +3,10 @@
 # SHPE Innovation Challenge 2021 - Santiago Gomez Paz
 
 import cv2
+import math
+
+THRESHOLD_A = 20
+THRESHOLD_B = 50
 
 cap = cv2.VideoCapture(0)
 
@@ -18,6 +22,11 @@ face_x = 0
 face_y = 0
 face_w = 100
 face_h = 100
+
+center_x = 0
+center_y = 0
+prev_center_x = 0
+prev_center_y = 0
 
 while(True):
     # Capture frame-by-frame
@@ -36,15 +45,19 @@ while(True):
 
     # Draw a rectangle around the face
     cnt = 0
+    prev_center_x = center_x
+    prev_center_y = center_y
     if(type(faces) != tuple):
         tracker_cnt = 0
         for (x, y, w, h) in faces:
             if(cnt == 0):
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-                face_x = int(x)
-                face_y = int(y)
-                face_w = int(w)
-                face_h = int(h)
+                face_x = x
+                face_y = y
+                face_w = w
+                face_h = h
+                center_x = x + w/2
+                center_y = y + h/2
                 cnt = cnt + 1
 
     elif(type(faces) == tuple):  # If there's no face, the type of faces is tuple
@@ -85,6 +98,8 @@ while(True):
             # Tracking success
             p1 = (int(bbox[0]), int(bbox[1]))
             p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
+            center_x = int(bbox[0] + bbox[2]/2)
+            center_y = int(bbox[1] + bbox[3]/2)
             cv2.rectangle(frame, p1, p2, (255, 0, 0), 2, 1)
         else:
             # Tracking failure
@@ -95,6 +110,22 @@ while(True):
 
     # Save last frame
     last_frame = frame
+
+    # Display face movement speed
+    speed = math.sqrt(pow(center_x - prev_center_x, 2) +
+                      pow(center_y - prev_center_y, 2))
+    speed = int(speed * 100) / 100   # Round to 2 decimals
+
+    # Display speed in the frame
+    if (speed < THRESHOLD_A):
+        cv2.putText(frame, "Motion: " + str(speed), (100, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 2)
+    elif (speed < THRESHOLD_B):
+        cv2.putText(frame, "Motion: " + str(speed), (100, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 255), 2)
+    else:
+        cv2.putText(frame, "Motion: " + str(speed), (100, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
 
     # Display the resulting frame
     cv2.imshow('frame', frame)
