@@ -3,6 +3,7 @@ import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 import streamlit.components.v1 as components
 import hydralit as hy
+from computervision.motiontracker import VideoTransformer
 
 app = hy.HydraApp(title='Head Tracker App')
 
@@ -44,7 +45,7 @@ target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
 @app.addapp(title='Demo')
 def Demo():
     st.header("Demo")
-    webrtc_streamer(key="example")
+    webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
 
 
 @app.addapp(title='About Us')

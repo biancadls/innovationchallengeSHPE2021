@@ -62,12 +62,8 @@ while(True):
 
     elif(type(faces) == tuple):  # If there's no face, the type of faces is tuple
         if(tracker_cnt == 0):
-            # Set up tracker.
-            # Instead of MIL, you can also use
-
-            tracker_types = ['BOOSTING', 'MIL', 'KCF',
-                             'TLD', 'MEDIANFLOW', 'CSRT', 'MOSSE']
-            tracker_type = tracker_types[5]
+            # Set up tracker
+            tracker_type = 'MIL'
 
             if tracker_type == 'BOOSTING':
                 tracker = cv2.TrackerBoosting_create()
