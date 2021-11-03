@@ -6,6 +6,7 @@ import hydralit as hy
 
 app = hy.HydraApp(title='Head Tracker App')
 
+
 @app.addapp(title='Home')
 def Home():
     st.title('Head Tracker')
@@ -13,14 +14,15 @@ def Home():
 
     st.subheader('1. What does the software do?')
     st.write('The Head Tracker is a system developed for theme parks to help prevent injuries in rollercoaster rides.')
-    
+
     st.subheader('Software Specifications')
     st.write('was implemented using Computer Vision technology to . Through a Camera App, theme park staff can keep track of  Moreover, 3D model prototypes were designed for ')
+
 
 @app.addapp(title='3D Models')
 def Models():
     st.header("3D Model")
-    st.write('3D modeling software: SolidWorks/Sketchfab')  
+    st.write('3D modeling software: SolidWorks/Sketchfab')
     components.html(
         """
         <div class="sketchfab-embed-wrapper">
@@ -38,10 +40,12 @@ target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
         """
     )
 
+
 @app.addapp(title='Demo')
 def Demo():
     st.header("Demo")
     webrtc_streamer(key="example")
+
 
 @app.addapp(title='About Us')
 def Contact():
@@ -58,8 +62,8 @@ def Contact():
         st.write("Santiago Gomez")
         st.write("Computer Science")
         st.write("Brigham Young University")
-        st.write("santigomezpaz@gmail.com")
-       
+        st.write("gomezpaz@byu.edu")
+
     with col2:
         st.image("./img/chris.jpg", width=300)
         st.write("Christopher Molina")
@@ -73,9 +77,10 @@ def Contact():
         st.write("Vaughn College of Aeronautics and Technology")
         st.write("kirill.sokolov124@gmail.com")
 
+
 @app.addapp(title='Contact Us')
 def Contact():
     st.header('Get in touch with us')
-   
+
 
 app.run()
