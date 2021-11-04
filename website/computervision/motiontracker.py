@@ -26,12 +26,9 @@ class VideoTransformer(VideoTransformerBase):
     def transform(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
-        # Our operations on the frame come here
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
         # Detect faces in the image
         faces = self.faceCascade.detectMultiScale(
-            gray,
+            img,
             scaleFactor=1.1,
             minNeighbors=3,
             minSize=(30, 30)

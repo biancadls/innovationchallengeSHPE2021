@@ -4,6 +4,8 @@ from streamlit_webrtc import webrtc_streamer
 import streamlit.components.v1 as components
 import hydralit as hy
 from computervision.motiontracker import VideoTransformer
+import pandas as pd
+import numpy as np
 
 app = hy.HydraApp(title='Head Tracker App')
 
@@ -41,12 +43,21 @@ target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
         """
     )
 
+plot = st.empty()
 
 @app.addapp(title='Demo')
 def Demo():
     st.header("Demo")
-    webrtc_streamer(
-        key="example", video_transformer_factory=VideoTransformer)
+    webrtc_streamer(key="demo",
+                    video_transformer_factory=VideoTransformer)
+
+    # Showcase data
+    chart_data = pd.DataFrame(np.random.randn(20, 3),
+                              columns=['a', 'b', 'c'])
+
+    plot = st.line_chart(chart_data)
+
+
 
 
 @app.addapp(title='About Us')
