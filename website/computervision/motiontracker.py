@@ -65,8 +65,10 @@ class VideoTransformer(VideoTransformerBase):
                 bbox = (self.face_x, self.face_y, self.face_w, self.face_h)
 
                 # Initialize tracker with first frame and bounding box
-                ok = self.tracker.init(self.last_img, bbox)
-
+                try:
+                    ok = self.tracker.init(self.last_img, bbox)
+                except:
+                    ok = self.tracker.init(img, bbox)
             # Update tracker
             ok, bbox = self.tracker.update(img)
 

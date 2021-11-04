@@ -45,7 +45,8 @@ target="_blank" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
 @app.addapp(title='Demo')
 def Demo():
     st.header("Demo")
-    webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
+    webrtc_streamer(
+        key="example", video_transformer_factory=VideoTransformer)
 
 
 @app.addapp(title='About Us')
